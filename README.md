@@ -4,7 +4,7 @@
 A standalone Python file of less than 100 lines.
 
 Miscellaneous Python codes baked in less than 100 lines! They're standalones, but I usually
-paired them in main() definitions at other projects.
+pair them in main() definitions at other projects.
 
 Free! (MIT License)
 
