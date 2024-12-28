@@ -1,13 +1,22 @@
-'''WIP! Time complexity tester.'''
+'''
+WIP! Time complexity tester. As of now, it is implemented for
+testing FFT from github.com/los-hamiltonian-method/NeutrinoOscillations
+'''
 import numpy as np
 import time
-import sys
-sys.path.insert(0, '../Formatter')
-import minipy_formatter as MPF
 
 def tictac(lower_bound, upper_bound, step=1,
            total_tests=4, show=True):
     '''Complexity test.'''
+    
+    print("\nTime Complexity Test")
+    print("--------------------")
+    print(f"Making {total_tests} time complexity tests witn n's for each test "
+          f"in range({lower_bound}, {upper_bound}, {step}).")
+    
+    if show:
+        print("Progress shown. Use show=False to hide it.")
+    
     TIC = time()
     for k in range(total_tests):
         n, times = [], []
@@ -37,5 +46,4 @@ def tictac(lower_bound, upper_bound, step=1,
     if show:
         print(f"\nFinished test! ({TAC:.2f}s)")
     return n, times_avg
-
-help(MPF)
+    
