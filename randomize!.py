@@ -1,9 +1,15 @@
 import json
 import random
+from datetime import datetime
 
 #%% Function definitions
-def practice(n=1, show=True):
-	ex_keys = list(data['exercises'].keys())
+def practice(n=1, *args, show=True):
+	i = 0
+	ex_keys = []
+	for ex in data['exercises']:
+		if set(data['exercises'][ex]['tags']) >= set(args):
+			ex_keys.append(ex)
+
 	chosen_exercises = random.sample(ex_keys, n)
 	if show:
 		for i, ex in enumerate(chosen_exercises):
@@ -14,8 +20,11 @@ def practice(n=1, show=True):
 
 
 def practiced(chosen_exercises):
+	frmt = "%d/%m/%y"
+	str_today = datetime.today().strftime(frmt)
 	for ex in chosen_exercises:
 		data['exercises'][ex]['times_practiced'] += 1
+		data['exercises'][ex]['practiced'] = str_today
 
 def save(chosen_exercises, show=True):
 	practiced(chosen_exercises)
@@ -30,11 +39,9 @@ def save(chosen_exercises, show=True):
 
 
 #%% Calls
-
-
 filename = "Exercises/絵.json"
 with open(filename) as f:
 	data = json.load(f)
 
-p = practice(2)
-save(p)
+p = practice(3)
+#save(p)

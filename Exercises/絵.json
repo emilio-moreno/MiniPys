@@ -1,19 +1,55 @@
 {
     "exercises": {
         "Lines": {
-            "added": "25/12/24",
-            "practiced": "-",
+            "added": "22/12/24",
+            "practiced": "24/12/24",
             "times_practiced": 3,
             "tags": [
-                "Fundamentals"
+                "Fundamentals",
+                "DrawABox"
             ]
         },
         "Ghosted planes": {
-            "added": "3",
-            "practiced": "-",
-            "times_practiced": 0,
+            "added": "22/12/24",
+            "practiced": "27/12/24",
+            "times_practiced": 2,
             "tags": [
-                "Fundamentals"
+                "Fundamentals",
+                "DrawABox"
+            ]
+        },
+        "Boxed ellipses": {
+            "added": "26/12/24",
+            "practiced": "26/12/24",
+            "times_practiced": 1,
+            "tags": [
+                "Fundamentals",
+                "DrawABox"
+            ]
+        },
+        "Plane ellipses": {
+            "added": "27/12/24",
+            "practiced": "27/12/24",
+            "times_practiced": 1,
+            "tags": [
+                "Fundamentals",
+                "DrawABox"
+            ]
+        },
+        "Front standing": {
+            "added": "23/12/24",
+            "practiced": "26/12/24",
+            "times_practiced": 2,
+            "tags": [
+                "Anatomy"
+            ]
+        },
+        "Side standing": {
+            "added": "27/12/24",
+            "practiced": "27/12/24",
+            "times_practiced": 2,
+            "tags": [
+                "Anatomy"
             ]
         }
     }
