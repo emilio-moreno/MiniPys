@@ -1,5 +1,5 @@
 # MiniPys
-MiniPy (noun, 個人的な定義) \
+**MiniPy** (noun, 個人的な定義) \
 /ˈmɪni paɪ/ \
 A standalone Python file of less than 100 lines.
 
