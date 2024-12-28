@@ -1,18 +1,36 @@
 '''Matplotlib formatter.'''
 from typing import Tuple
 import matplotlib.pyplot as plt
+import matplotlib.font_manager as font_manager
+from typing import List
 
 class Format:
     '''Applies a default Matplotlib format to plt.rcParams.'''
+
+    def __init__(self, font_paths: List[str] = None,
+                 font_serif: List[str] = ['CMU Serif', 'Times New Roman', 'FreeSerif']):
+        self.font_paths = font_paths
+        self.font_serif = font_serif
     
-    font_serif = ['Times New Roman', 'FreeSerif']
-    
-    def rcUpdate(font_size: int = 15, font_family: str = 'serif',
-                   math_font: str ='cm') -> None:
+    def rcUpdate(self, font_size: int = 15, font_family: str = 'serif',
+                   font_weight: str = 'light', math_font: str ='cm') -> None:
+        if self.font_paths:
+            for font in self.font_paths:
+                Format.addFont(font)
+        
         rc_update = {'font.size': font_size, 'font.family': font_family,
-				 'font.serif': Format.font_serif,
+				 'font.serif': self.font_serif, 'font.weight': font_weight,
                  'mathtext.fontset': math_font}
         plt.rcParams.update(rc_update)
+
+    @staticmethod
+    def addFont(font_path: str) -> str:
+        try:
+            font_manager.fontManager.addfont(font_path)
+            prop = font_manager.FontProperties(fname=font_path)
+        except FileNotFoundError:
+            print(f'WARNING: Font {font_path} not found.')
+
 
 class Colors:
     
