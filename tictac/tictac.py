@@ -1,6 +1,5 @@
 '''
-WIP! Time complexity tester. As of now, it is implemented for
-testing FFT from github.com/los-hamiltonian-method/NeutrinoOscillations
+Time complexity tester.
 '''
 import numpy as np
 from time import time, sleep
