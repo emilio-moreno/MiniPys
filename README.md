@@ -10,5 +10,5 @@ Free! (MIT License)
 
 MiniPys include:
 - Formatter: Matplotlib formatter with a color dictionary implementation.
-- tictac (WIP): A formatted time complexity tester.
+- tictac: A formatted time complexity tester.
 - Fourier Examples: Fourier series of simple functions with plots.

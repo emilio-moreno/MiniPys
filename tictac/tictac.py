@@ -3,13 +3,20 @@ WIP! Time complexity tester. As of now, it is implemented for
 testing FFT from github.com/los-hamiltonian-method/NeutrinoOscillations
 '''
 import numpy as np
-import time
+from time import time, sleep
+from typing import Callable
 
-def tictac(lower_bound, upper_bound, step=1,
+def void(i):
+    return
+
+def tictac(lower_bound=0, upper_bound=100, step=1,
+           code: Callable[[int], None] = void,
+           precode: Callable[[int], None] = void,
+           postcode: Callable[[int], None] = void,
            total_tests=4, show=True):
-    '''Complexity test.'''
+    '''Time complexity tests.'''
     
-    print("\nTime Complexity Test")
+    print("\ntictac: Time Complexity Test")
     print("--------------------")
     print(f"Making {total_tests} time complexity tests witn n's for each test "
           f"in range({lower_bound}, {upper_bound}, {step}).")
@@ -25,13 +32,14 @@ def tictac(lower_bound, upper_bound, step=1,
             print(f"\nTest time: {round(TAC, 2)}s", f"k = {k}", f"n | t",
                   "------------", sep="\n")
         for i in range(lower_bound, upper_bound, step):
-            coeff = np.random.uniform(-100, 100, (i, 1))
-            P = Polynomial(coeff)
-            
+            precode(i)
+
             tic = time()
-            P.FFT()
+            code(i)
             tac = time() - tic
             
+            postcode(i)
+
             n.append(i)
             times.append(tac)
             
@@ -46,4 +54,29 @@ def tictac(lower_bound, upper_bound, step=1,
     if show:
         print(f"\nFinished test! ({TAC:.2f}s)")
     return n, times_avg
-    
+
+
+#%% main()
+def main():
+    import matplotlib.pyplot as plt
+
+    def precode(i):
+        global A
+        A = [a for a in range(i)]
+        sleep(1)
+
+    def code(i):
+        print(A)
+
+    n, t = tictac(upper_bound=int(1E5), precode=precode, code=code,
+                  total_tests=3, step=10000)
+
+    fig, ax = plt.subplots()
+    ax.plot(n, t)
+
+    plt.show()
+
+
+#%% 呪い
+if __name__ == '__main__':
+    main()
