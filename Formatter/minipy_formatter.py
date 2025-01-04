@@ -33,6 +33,12 @@ class Format:
         except FileNotFoundError:
             print(f'WARNING: Font {font_path} not found.')
 
+    @staticmethod
+    def fullscreen_show():
+        figManager = plt.get_current_fig_manager()
+        figManager.full_screen_toggle()
+        plt.show()
+
 
 class Colors:
     
@@ -87,6 +93,7 @@ class Color:
                                 code_type=code_type)
 
     @staticmethod
+    # I need a way to avoid under/overshoothing.
     def change_lightness(rgb, light: int,
                          code_type: str = 'hex') -> str | RGB_type:
         '''Changes lightness on HSL value of color. Returns hex or rgb.'''
@@ -123,8 +130,17 @@ class Color:
     def rgb01_to_rgb(r: int, g: int , b: int) -> RGB_type:
         return (x * 255 for x in (r, g, b))
 
+    def __repr__(self):
+        return f'Color={self.hex}'
 
-colors = Colors(('miku', '#5dd4d8'), ('rin', '#ecd38c'),
+#%% main()
+def main():
+    colors = Colors(('miku', '#5dd4d8'), ('rin', '#ecd38c'),
                     ('darkrin', '#c6b176'), ('lgray', '#c0c0c0'))
 
-fig, ax = plt.subplots()
+    fig, ax = plt.subplots()
+
+
+#%% 呪い
+if __name__ == '__main__':
+    main()

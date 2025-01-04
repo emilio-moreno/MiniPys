@@ -2,57 +2,82 @@
 Time complexity tester.
 '''
 import numpy as np
+import matplotlib.pyplot as plt
 from time import time, sleep
-from typing import Callable
+from typing import Callable, Tuple
+ndarray = np.ndarray
 
 def void(i):
-    return
+    return None
 
-def tictac(lower_bound=0, upper_bound=100, step=1,
-           code: Callable[[int], None] = void,
-           precode: Callable[[int], None] = void,
-           postcode: Callable[[int], None] = void,
-           total_tests=4, show=True):
-    '''Time complexity tests.'''
-    
-    print("\ntictac: Time Complexity Test")
-    print("--------------------")
-    print(f"Making {total_tests} time complexity tests witn n's for each test "
-          f"in range({lower_bound}, {upper_bound}, {step}).")
-    
-    if show:
-        print("Progress shown. Use show=False to hide it.")
-    
-    TIC = time()
-    for k in range(total_tests):
-        n, times = [], []
+class TicTac:
+    def __init__(self, name: str, low_bound: int = 0, up_bound: int = 100,
+        step: int = 1, variable: str = "n",
+        code: Callable[[int], None] = void,
+        precode: Callable[[int], None] = void,
+        postcode: Callable[[int], None] = void,
+        total_tests=4, show=True) -> Tuple[ndarray, ndarray]:
+        '''Time complexity tests.'''
+        self.name = name
+        self.low_bound = low_bound
+        self.up_bound = up_bound
+        self.step = step
+        self.total_tests = total_tests
+        self.variable = variable
+        
+        print(f"\nTicTac - Time Complexity Test")
+        print(f"Name: {name}")
+        if variable != "n":
+            print(f"Testing (n): {variable}")
+        print("")
+        print(f"Making {total_tests} time complexity tests witn n's for each test "
+              f"in range({low_bound}, {up_bound}, {step}).")
         if show:
-            TAC = time() - TIC
-            print(f"\nTest time: {round(TAC, 2)}s", f"k = {k}", f"n | t",
-                  "------------", sep="\n")
-        for i in range(lower_bound, upper_bound, step):
-            precode(i)
+            print("Progress shown. Use show=False to hide it.")
 
-            tic = time()
-            code(i)
-            tac = time() - tic
-            
-            postcode(i)
-
-            n.append(i)
-            times.append(tac)
-            
+        TIC = time()
+        for k in range(total_tests):
+            n, times = [], []
             if show:
-                print(f"{i} | {tac:.2f}s")
-        n, times = np.array(n), np.array(times)
-        if k == 0:
-            times_avg = times
-        times_avg += times / total_tests
-    
-    TAC = time() - TIC
-    if show:
-        print(f"\nFinished test! ({TAC:.2f}s)")
-    return n, times_avg
+                TAC = time() - TIC
+                print(f"\nTest time: {round(TAC, 2)}s", f"k = {k}", f"n | t",
+                      "------------", sep="\n")
+            for i in range(low_bound, up_bound, step):
+                precode(i)
+
+                tic = time()
+                code(i)
+                tac = time() - tic
+                
+                postcode(i)
+
+                n.append(i)
+                times.append(tac)
+                
+                if show:
+                    print(f"{i} | {tac:.2f}s")
+            n, times = np.array(n), np.array(times)
+            if k == 0:
+                times_avg = times
+            times_avg += times / total_tests
+        
+        TAC = time() - TIC
+        if show:
+            print(f"\nFinished test! (Total test time: {TAC:.2f}s)")
+
+        self.n = np.array(n)
+        self.t = np.array(times_avg)
+
+    def plot(self) -> Tuple[plt.figure, plt.axis]:
+        fig, ax = plt.subplots()
+        ax.scatter(self.n, self.t, color='#5dd4d8')
+        title = f"{self.name}"
+        title += f"\nrange({self.low_bound}, {self.up_bound}, {self.step})"
+        title += f"\nTotal tests = {self.total_tests}"
+        ax.set(title=title, xlabel=self.variable, ylabel="Time taken (s)")
+        ax.grid(linestyle='--', color='#c0c0c0')
+        return fig, ax
+
 
 
 #%% main()
@@ -67,12 +92,10 @@ def main():
     def code(i):
         print(A)
 
-    n, t = tictac(upper_bound=int(1E5), precode=precode, code=code,
-                  total_tests=3, step=10000)
-
-    fig, ax = plt.subplots()
-    ax.plot(n, t)
-
+    test = TicTac(name='Print List', variable='List length (i)',
+                up_bound=int(1E3) + 1, precode=precode, code=code,
+                total_tests=3, step=100)
+    test.plot()
     plt.show()
 
 
