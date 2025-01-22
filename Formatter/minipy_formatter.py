@@ -1,5 +1,5 @@
 '''Matplotlib formatter.'''
-from typing import Tuple
+from typing import Tuple, Union
 import matplotlib.pyplot as plt
 import matplotlib.font_manager as font_manager
 from typing import List
@@ -67,7 +67,7 @@ class Color:
             raise ValueError(f"Code {code_type} not supported."
                              f"Use a code type from {Color.supported_codes}.")
     
-    def __init__(self, code: str | RGB_type,
+    def __init__(self, code: Union[str, RGB_type],
                  code_type: str = 'hex') -> None:
         Color.check_code(code_type)
 
@@ -81,13 +81,13 @@ class Color:
         self.code_type = code_type
 
     def dark(self, light: int = -25,
-             code_type: str = 'hex') -> str | RGB_type:
+             code_type: str = 'hex') -> Union[str, RGB_type]:
         '''Subtracts lightness from HSL value of color. Returns hex or rgb.'''
         return Color.change_lightness(self.rgb, light=light,
                                       code_type=code_type)
 
     def light(self, light: int = 25,
-              code_type: str = 'hex') -> str | RGB_type:
+              code_type: str = 'hex') -> Union[str, RGB_type]:
         '''Adds lightness from HSL value of color. Returns hex or rgb.'''
         return Color.change_lightness(self.rgb, light=light,
                                 code_type=code_type)
@@ -95,7 +95,7 @@ class Color:
     @staticmethod
     # I need a way to avoid under/overshoothing.
     def change_lightness(rgb, light: int,
-                         code_type: str = 'hex') -> str | RGB_type:
+                         code_type: str = 'hex') -> Union[str, RGB_type]:
         '''Changes lightness on HSL value of color. Returns hex or rgb.'''
         Color.check_code(code_type)
         hsl = list(rgb_to_hls(*Color.rgb_to_rgb01(*rgb)))
